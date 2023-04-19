@@ -43,26 +43,34 @@ const Todo = ({ id, content, complete, ...props }) => {
             value={updateContent}
             onChange={(e) => setUpdateContent(e.target.value)}
           />
-          <UpdateButton
+          <Button
             data-testid='submit-button'
+            color='blueviolet'
             onClick={handleUpdateSubmitClick}>
             Submit
-          </UpdateButton>
-          <RemoveButton data-testid='cancel-button' onClick={handleCancelClick}>
+          </Button>
+          <Button
+            data-testid='cancel-button'
+            color='red'
+            onClick={handleCancelClick}>
             Cancel
-          </RemoveButton>
+          </Button>
         </div>
       ) : (
         <div>
           <Content complete={complete}>{content}</Content>
-          <UpdateButton data-testid='modify-button' onClick={handleUpdateClick}>
+          <Button
+            data-testid='modify-button'
+            color='blueviolet'
+            onClick={handleUpdateClick}>
             Update
-          </UpdateButton>
-          <RemoveButton
+          </Button>
+          <Button
             data-testid='delete-button'
+            color='red'
             onClick={() => removeTodo(id)}>
             Remove
-          </RemoveButton>
+          </Button>
         </div>
       )}
     </ListItem>
@@ -98,24 +106,13 @@ const Content = styled.span`
   text-decoration: ${({ complete }) => (complete ? "line-through" : "none")};
 `;
 
-const RemoveButton = styled.button`
+const Button = styled.button`
   width: 60px;
   height: 24px;
   margin-left: 8px;
   color: white;
   border-radius: 8px;
   border: none;
-  background-color: red;
-  cursor: pointer;
-`;
-
-const UpdateButton = styled.button`
-  width: 60px;
-  height: 24px;
-  margin-left: 8px;
-  color: white;
-  border-radius: 8px;
-  border: none;
-  background-color: blueviolet;
+  background-color: ${({ color }) => color};
   cursor: pointer;
 `;
