@@ -1,7 +1,11 @@
+import NewTodoForm from "../components/todo/NewTodoForm";
+import TodoList from "../components/todo/TodoList";
+
 const Todo = () => {
   return (
     <div>
-      <h1>Todos</h1>
+      <NewTodoForm />
+      <TodoList />
     </div>
   );
 };
