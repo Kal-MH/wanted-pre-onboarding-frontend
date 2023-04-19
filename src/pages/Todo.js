@@ -11,6 +11,8 @@ import {
 } from "../apis/todos";
 import TodoProvider from "../context/TodoProvider";
 
+const SIGNIN = "/signin";
+
 const Todo = () => {
   const navigate = useNavigate();
   const [token] = useLocalStorage("token", "");
@@ -53,7 +55,7 @@ const Todo = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/signin");
+      navigate(SIGNIN);
     }
   }, [token, navigate]);
 

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Input } from "../components/base";
+import { Button } from "../components/base";
 import useForm from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 import { validateInput } from "../utils/validateInput";
@@ -7,10 +7,11 @@ import { postSignIn } from "../apis/sign";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useEffect } from "react";
 import Information from "../components/sign/Information";
+import { ROUTES, STORAGE_KEYS } from "../utils/constants";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useLocalStorage("token", "");
+  const [token, setToken] = useLocalStorage(STORAGE_KEYS.TOKEN, "");
   const { errors, handleInputChange, handleSubmit } = useForm({
     initialValue: [],
     validate: validateInput,
@@ -19,16 +20,17 @@ const Signin = () => {
         const { access_token } = await postSignIn(values);
         access_token && setToken(access_token);
 
-        navigate("/todo");
+        navigate(ROUTES.TODO);
       } catch (e) {
         alert(e);
+        navigate(ROUTES.SIGNUP);
       }
     },
   });
 
   useEffect(() => {
     if (token) {
-      navigate("/todo");
+      navigate(ROUTES.TODO);
     }
   }, [token, navigate]);
 

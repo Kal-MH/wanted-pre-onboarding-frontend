@@ -1,22 +1,24 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { Button, Input } from "../components/base";
+import { Button } from "../components/base";
 import useForm from "../hooks/useForm";
 import { validateInput } from "../utils/validateInput";
 import { postSignUp } from "../apis/sign";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useEffect } from "react";
+import Information from "../components/sign/Information";
+import { ROUTES, STORAGE_KEYS } from "../utils/constants";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [token] = useLocalStorage("token", "");
+  const [token] = useLocalStorage(STORAGE_KEYS.TOKEN, "");
   const { errors, handleInputChange, handleSubmit } = useForm({
     initialValue: [],
     validate: validateInput,
     onSubmit: async (values) => {
       try {
         await postSignUp(values);
-        navigate("/signin");
+        navigate(ROUTES.SIGNIN);
       } catch (e) {
         alert(e);
       }
@@ -25,25 +27,13 @@ const Signup = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/todo");
+      navigate(ROUTES.TODO);
     }
   }, [token, navigate]);
 
   return (
     <Container>
-      <Input
-        data-testid='email-input'
-        name='email'
-        placeholder='email'
-        onChange={handleInputChange}
-      />
-      <Input
-        data-testid='password-input'
-        type='password'
-        name='password'
-        placeholder='password'
-        onChange={handleInputChange}
-      />
+      <Information handleInputChange={handleInputChange} />
       <Button
         data-testid='signup-button'
         disabled={errors}

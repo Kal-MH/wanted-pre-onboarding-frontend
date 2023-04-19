@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getLocalStorage } from "../utils/storage";
+import { STORAGE_KEYS } from "../utils/constants";
 
 const API_END_POINT = "https://www.pre-onboarding-selection-task.shop/";
 
@@ -21,7 +22,7 @@ const defaultInstance = axios.create({
 });
 
 const getRequestConfig = (config) => {
-  const token = getLocalStorage("token");
+  const token = getLocalStorage(STORAGE_KEYS.TOKEN);
 
   return {
     ...config,

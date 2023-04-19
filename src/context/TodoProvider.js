@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { STORAGE_KEYS } from "../utils/constants";
 
 const TodoContext = createContext();
 
@@ -12,7 +13,7 @@ const TodoProvider = ({
   handleDeleteTodo,
   handleUpdateTodo,
 }) => {
-  const [todos, setTodos] = useLocalStorage("todos", []);
+  const [todos, setTodos] = useLocalStorage(STORAGE_KEYS.TODOS, []);
 
   useEffect(() => {
     const initTodos = async () => {
