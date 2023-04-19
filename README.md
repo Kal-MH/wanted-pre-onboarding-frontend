@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# 원티드 인터십 사전과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+제공된 API를 사용하여 로그인, 회원가입 기능이 첨가된 투두리스트를 만듭니다.
 
-## Available Scripts
+## 제공 기능
 
-In the project directory, you can run:
+1. 로그인, 회원가입
+    - 로그인, 회원가입 시 각각 email, password를 입력합니다.
+    - 각각 입력값에 대해서 유효성 검사를 진행합니다. (email: @문자 포함, password: 8문자 이상)
+2. 투두리스트
+인증된 사용자는 투두리스트를 사용할 수 있습니다.
+    - 리스트 추가: 입력한 값에 대해서 리스트에 추가할 수 있습니다.
+    - 리스트 삭제: remove 버튼을 통해 리스트에서 목록 하나를 삭제할 수 있습니다
+    - 리스트 수정: 입력한 값을 수정할 수 있습니다. 더불어 완료한 할 일 목록에 대해서 toggle을 통해 완료표시를 할 수 있습니다.
+    
+## 추가 사용한 라이브러리
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+  "dependencies": {
+    "@craco/craco": "^7.1.0",
+    "@emotion/babel-plugin": "^11.10.6",
+    "@emotion/babel-preset-css-prop": "^11.10.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "axios": "^1.3.5",
+    "react-router-dom": "^6.10.0",
+  },
+```
