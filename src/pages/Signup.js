@@ -1,27 +1,34 @@
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../components/base";
 import useForm from "../hooks/useForm";
+import { validateInput } from "../utils/validateInput";
+import { postSignUp } from "../apis/sign";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { useEffect } from "react";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [storedValue] = useLocalStorage("token", "");
   const { errors, handleInputChange, handleSubmit } = useForm({
     initialValue: [],
-    validate: (values) => {
-      const newError = {};
-      const { email, password } = values;
-
-      const passwordRegex = /^.{8,}$/;
-
-      if (!email || email.indexOf("@") < 0)
-        newError["email"] = "Invalid: Email with no '@'";
-      if (!password || !passwordRegex.test(password))
-        newError["password"] = "Invalid: Password under 8 length";
-
-      return newError;
-    },
-    onSubmit: (values) => {
-      console.log(values, "submit");
+    validate: validateInput,
+    onSubmit: async (values) => {
+      try {
+        await postSignUp(values);
+        navigate("/signin");
+      } catch (e) {
+        alert(e);
+      }
     },
   });
+
+  useEffect(() => {
+    if (storedValue) {
+      navigate("/todo");
+    }
+  }, []);
+
   return (
     <Container>
       <Input
@@ -32,6 +39,7 @@ const Signup = () => {
       />
       <Input
         data-testid='password-input'
+        type='password'
         name='password'
         placeholder='password'
         onChange={handleInputChange}
