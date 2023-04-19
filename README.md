@@ -13,6 +13,9 @@
     - 리스트 삭제: remove 버튼을 통해 리스트에서 목록 하나를 삭제할 수 있습니다
     - 리스트 수정: 입력한 값을 수정할 수 있습니다. 더불어 완료한 할 일 목록에 대해서 toggle을 통해 완료표시를 할 수 있습니다.
     
+## 배포 주소
+[https://wanted-pre-onboarding-frontend-eta-ten.vercel.app/](https://wanted-pre-onboarding-frontend-eta-ten.vercel.app/)
+    
 ## 추가 사용한 라이브러리
 
 ```
