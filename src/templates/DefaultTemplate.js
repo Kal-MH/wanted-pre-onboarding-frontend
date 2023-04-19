@@ -1,12 +1,17 @@
 import styled from "@emotion/styled";
 import Header from "../components/base/Header";
+import Nav from "../components/shared/Nav";
+import { Fragment } from "react";
 
 const DefaultTemplate = ({ children }) => {
   return (
-    <Container>
-      <Header>Todo</Header>
-      <main>{children}</main>
-    </Container>
+    <Fragment>
+      <Nav />
+      <Container>
+        <Header>Todo</Header>
+        <main>{children}</main>
+      </Container>
+    </Fragment>
   );
 };
 
