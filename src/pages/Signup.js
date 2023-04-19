@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [storedValue] = useLocalStorage("token", "");
+  const [token] = useLocalStorage("token", "");
   const { errors, handleInputChange, handleSubmit } = useForm({
     initialValue: [],
     validate: validateInput,
@@ -24,10 +24,10 @@ const Signup = () => {
   });
 
   useEffect(() => {
-    if (storedValue) {
+    if (token) {
       navigate("/todo");
     }
-  }, []);
+  }, [token, navigate]);
 
   return (
     <Container>

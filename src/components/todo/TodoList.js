@@ -1,18 +1,18 @@
 import styled from "@emotion/styled";
-import { useTodos } from "../../context/TodoProvider";
 import Todo from "./Todo";
+import { useTodos } from "../../context/TodoProvider";
 
-const TodoList = (props) => {
+const TodoList = () => {
   const { todos } = useTodos();
 
   return (
-    <UnorderedList {...props}>
-      {todos.map((todo) => (
+    <UnorderedList>
+      {(todos || []).map((todo) => (
         <Todo
           key={todo.id}
           id={todo.id}
-          content={todo.content}
-          complete={todo.complete}
+          todo={todo.todo}
+          isCompleted={todo.isCompleted}
         />
       ))}
     </UnorderedList>

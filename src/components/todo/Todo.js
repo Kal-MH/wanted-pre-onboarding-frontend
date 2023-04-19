@@ -3,9 +3,9 @@ import { useTodos } from "../../context/TodoProvider";
 import Toggle from "../base/Toggle";
 import { useState } from "react";
 
-const Todo = ({ id, content, complete, ...props }) => {
-  const { updateTodo, removeTodo, updateTodoToggle } = useTodos();
-  const [updateContent, setUpdateContent] = useState(content);
+const Todo = ({ id, todo, isCompleted, ...props }) => {
+  const { updateTodo, removeTodo } = useTodos();
+  const [updateContent, setUpdateContent] = useState(todo);
   const [updateFlag, setUpdateFlag] = useState(false);
 
   const handleUpdateClick = (e) => {
@@ -15,7 +15,7 @@ const Todo = ({ id, content, complete, ...props }) => {
 
   const handleCancelClick = (e) => {
     e.preventDefault();
-    setUpdateContent(content);
+    setUpdateContent(todo);
     setUpdateFlag((prev) => !prev);
   };
 
@@ -23,7 +23,7 @@ const Todo = ({ id, content, complete, ...props }) => {
     e.preventDefault();
 
     if (updateFlag) {
-      updateTodo(id, updateContent);
+      updateTodo({ id, todo: updateContent });
     }
 
     setUpdateFlag((prev) => !prev);
@@ -32,8 +32,8 @@ const Todo = ({ id, content, complete, ...props }) => {
   return (
     <ListItem {...props}>
       <Toggle
-        on={complete}
-        onChange={(e) => updateTodoToggle(id, e.target.checked)}
+        on={isCompleted}
+        onChange={(e) => updateTodo({ id, isCompleted: e.target.checked })}
       />
       {updateFlag ? (
         <div>
@@ -58,7 +58,7 @@ const Todo = ({ id, content, complete, ...props }) => {
         </div>
       ) : (
         <div>
-          <Content complete={complete}>{content}</Content>
+          <Content complete={isCompleted}>{todo}</Content>
           <Button
             data-testid='modify-button'
             color='blueviolet'

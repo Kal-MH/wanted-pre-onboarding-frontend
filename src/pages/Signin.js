@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [storedValue, setValue] = useLocalStorage("token", "");
+  const [token, setToken] = useLocalStorage("token", "");
   const { errors, handleInputChange, handleSubmit } = useForm({
     initialValue: [],
     validate: validateInput,
@@ -17,7 +17,7 @@ const Signin = () => {
       try {
         const { access_token } = await postSignIn(values);
 
-        setValue(access_token);
+        setToken(access_token);
         navigate("/todo");
       } catch (e) {
         alert(e);
@@ -26,10 +26,10 @@ const Signin = () => {
   });
 
   useEffect(() => {
-    if (storedValue) {
+    if (token) {
       navigate("/todo");
     }
-  }, []);
+  }, [token, navigate]);
 
   return (
     <Container>
