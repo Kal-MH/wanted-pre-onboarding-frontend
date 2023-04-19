@@ -6,6 +6,7 @@ import { validateInput } from "../utils/validateInput";
 import { postSignIn } from "../apis/sign";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useEffect } from "react";
+import Information from "../components/sign/Information";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ const Signin = () => {
     onSubmit: async (values) => {
       try {
         const { access_token } = await postSignIn(values);
+        access_token && setToken(access_token);
 
-        setToken(access_token);
         navigate("/todo");
       } catch (e) {
         alert(e);
@@ -33,19 +34,7 @@ const Signin = () => {
 
   return (
     <Container>
-      <Input
-        data-testid='email-input'
-        name='email'
-        placeholder='email'
-        onChange={handleInputChange}
-      />
-      <Input
-        data-testid='password-input'
-        name='password'
-        type='password'
-        placeholder='password'
-        onChange={handleInputChange}
-      />
+      <Information handleInputChange={handleInputChange} />
       <Button
         data-testid='signin-button'
         disabled={errors}

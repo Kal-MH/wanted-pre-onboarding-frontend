@@ -47,7 +47,7 @@ const Todo = () => {
 
       return data;
     } catch (e) {
-      alert(e);
+      return [];
     }
   }, []);
 

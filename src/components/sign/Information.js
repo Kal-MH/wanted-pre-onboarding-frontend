@@ -1,21 +1,9 @@
 import styled from "@emotion/styled";
 import { Input } from "../base";
-import useForm from "../../hooks/useForm";
 
-const Information = (props) => {
-  const { handleInputChange } = useForm({
-    initialValue: [],
-    validate: (values) => {
-      console.log(values, "hello");
-
-      return { email: "error!" };
-    },
-    onSubmit: (values) => {
-      console.log(values, "submit");
-    },
-  });
+const Information = ({ handleInputChange, props }) => {
   return (
-    <Container {...props}>
+    <Container>
       <Input
         data-testid='email-input'
         name='email'
@@ -25,6 +13,7 @@ const Information = (props) => {
       <Input
         data-testid='password-input'
         name='password'
+        type='password'
         placeholder='password'
         onChange={handleInputChange}
       />

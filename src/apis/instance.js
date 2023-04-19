@@ -13,19 +13,27 @@ const METHOD = {
 
 const { GET, POST, DELETE, PUT, PATCH } = METHOD;
 
-const getDefaultInstance = (method) => {
+const defaultInstance = axios.create({
+  baseURL: API_END_POINT,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+const getRequestConfig = (config) => {
   const token = getLocalStorage("token");
 
-  const defaultInstance = axios.create({
-    baseURL: API_END_POINT,
-    method,
+  return {
+    ...config,
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",
     },
-  });
+  };
+};
 
-  return defaultInstance;
+const getDefaultInstance = (method) => (config) => {
+  return defaultInstance({ ...getRequestConfig(config), method });
 };
 
 const HTTP = {
