@@ -20,6 +20,36 @@
 ## 배포 주소
 [https://wanted-pre-onboarding-frontend-eta-ten.vercel.app/](https://wanted-pre-onboarding-frontend-eta-ten.vercel.app/)
     
+## 프로젝트 구조
+```
+📦 src
+├── 📂 apis
+├── 📂 components
+│   ├── 📂 base
+│   │    ├── 📄 Button.js
+│   │    ├── 📄 Input.js
+│   │    ├── 📄 Toggle.js
+│   │    └── 📄 Header.js
+│   ├── 📂 shared
+│   │    └── 📄 Nav.js
+│   ├── 📂 sign
+│   │    └── 📄 Information.js
+│   ├── 📂 todo
+│   │    ├── 📄 Todo.js
+│   │    ├── 📄 TodoList.js
+│   │    └── 📄 NewTodoForm.js
+├── 📂 hooks
+├── 📂 context
+├── 📂 templates
+├── 📂 pages
+│   ├── 📄 Home
+│   ├── 📄 NotFound
+│   ├── 📄 Signin
+│   ├── 📄 Signup
+│   └── 📄 Todo
+└── 📂 utils
+```
+
 ## 추가 사용한 라이브러리
 
 ```
