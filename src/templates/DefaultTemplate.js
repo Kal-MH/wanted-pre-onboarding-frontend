@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
+import { Fragment } from "react";
+
 import Header from "../components/base/Header";
 import Nav from "../components/shared/Nav";
-import { Fragment } from "react";
 
 const DefaultTemplate = ({ children }) => {
   return (

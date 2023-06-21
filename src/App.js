@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import DefaultTemplate from "./templates/DefaultTemplate";
-import NotFound from "./pages/NotFound";
+
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Todo from "./pages/Todo";
+import DefaultTemplate from "./templates/DefaultTemplate";
 
 function App() {
   return (
