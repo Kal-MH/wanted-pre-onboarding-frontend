@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+
+import { ROUTES } from "../../utils/constants";
 
 const Nav = () => {
   return (

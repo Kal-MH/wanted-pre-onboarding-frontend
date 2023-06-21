@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
+
 import { useTodos } from "../../context/TodoProvider";
 import Toggle from "../base/Toggle";
-import { useState } from "react";
 
 const Todo = ({ id, todo, isCompleted, ...props }) => {
   const { updateTodo, removeTodo } = useTodos();

@@ -23,8 +23,8 @@ module.exports = {
   },
   rules: {
     "react/react-in-jsx-scope": "off",
-    "simple-import-sort/imports": "off",
-    "simple-import-sort/exports": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "off",
   },

@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
+
 import { useTodos } from "../../context/TodoProvider";
-import { Input, Button as SubmitButton } from "../base";
+import { Button as SubmitButton, Input } from "../base";
 
 const NewTodoForm = (props) => {
   const [todo, setTodo] = useState("");

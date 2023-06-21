@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import Todo from "./Todo";
+
 import { useTodos } from "../../context/TodoProvider";
+import Todo from "./Todo";
 
 const TodoList = () => {
   const { todos } = useTodos();

@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/base";
-import useForm from "../hooks/useForm";
-import { validateInput } from "../utils/validateInput";
-import { postSignUp } from "../apis/sign";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { postSignUp } from "../apis/sign";
+import { Button } from "../components/base";
 import Information from "../components/sign/Information";
+import useForm from "../hooks/useForm";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { ROUTES, STORAGE_KEYS } from "../utils/constants";
+import { validateInput } from "../utils/validateInput";
 
 const Signup = () => {
   const navigate = useNavigate();

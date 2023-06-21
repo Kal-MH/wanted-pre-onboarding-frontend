@@ -1,6 +1,7 @@
 import axios from "axios";
-import { getLocalStorage } from "../utils/storage";
+
 import { STORAGE_KEYS } from "../utils/constants";
+import { getLocalStorage } from "../utils/storage";
 
 const API_END_POINT = "https://www.pre-onboarding-selection-task.shop/";
 
