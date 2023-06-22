@@ -4,7 +4,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { todoData } from "../interfaces/todo";
 import { STORAGE_KEYS } from "../utils/constants";
 
-interface TodoProviderProps {
+interface ITodoProviderProps {
   children: React.ReactNode;
   handleGetTodo: Function;
   handleCreateTodo: Function;
@@ -12,14 +12,14 @@ interface TodoProviderProps {
   handleUpdateTodo: Function;
 }
 
-interface TodoContextProps {
+interface ITodoContext {
   todos: todoData[];
-  addTodo: (content: string) => Promise<void>;
-  updateTodo: (tood: todoData) => Promise<void>;
-  removeTodo: (id: string) => Promise<void>;
+  addTodo: (content: string) => void;
+  updateTodo: (todo: todoData) => void;
+  removeTodo: (id: string) => void;
 }
 
-const TodoContext = createContext({} as TodoContextProps);
+const TodoContext = createContext<ITodoContext>({} as ITodoContext);
 
 export const useTodos = () => useContext(TodoContext);
 
@@ -29,11 +29,8 @@ const TodoProvider = ({
   handleCreateTodo,
   handleDeleteTodo,
   handleUpdateTodo,
-}: TodoProviderProps) => {
-  const [todos, setTodos] = useLocalStorage(
-    STORAGE_KEYS.TODOS,
-    [] as todoData[]
-  );
+}: ITodoProviderProps) => {
+  const [todos, setTodos] = useLocalStorage<todoData[]>(STORAGE_KEYS.TODOS, []);
 
   useEffect(() => {
     const initTodos = async () => {
@@ -58,7 +55,7 @@ const TodoProvider = ({
     ]);
   };
 
-  const updateTodo = async ({ id, todo, isCompleted }: todoData) => {
+  const updateTodo = async ({ id, todo = "", isCompleted }: todoData) => {
     const filteredItem = todos.filter((item: todoData) => item.id === id)[0];
     const config = {
       id,

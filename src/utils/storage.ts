@@ -11,7 +11,7 @@ export const getLocalStorage = (key: string, defaultValue = "") => {
   }
 };
 
-export const setLocalStorage = (key: string, value: any) => {
+export const setLocalStorage = <T>(key: string, value: T) => {
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch (error) {

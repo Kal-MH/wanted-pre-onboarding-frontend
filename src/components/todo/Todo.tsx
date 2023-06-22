@@ -5,13 +5,13 @@ import { useTodos } from "../../context/TodoProvider";
 import { todoData } from "../../interfaces/todo";
 import Toggle from "../base/Toggle";
 
-interface Props {
+interface ITodoProps {
   id: string;
   todo: string;
   isCompleted: boolean;
 }
 
-const Todo = ({ id, todo, isCompleted }: Props) => {
+const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
   const { updateTodo, removeTodo } = useTodos();
   const [updateContent, setUpdateContent] = useState(todo);
   const [updateFlag, setUpdateFlag] = useState(false);
@@ -38,7 +38,7 @@ const Todo = ({ id, todo, isCompleted }: Props) => {
   };
 
   return (
-    <ListItem>
+    <ListItem {...props}>
       <Toggle
         on={isCompleted}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

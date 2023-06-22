@@ -1,18 +1,19 @@
 import styled from "@emotion/styled";
+import { ChangeEvent } from "react";
 
 import useToggle from "../../hooks/useToggle";
 
-interface Props {
-  on: boolean;
-  onChange: Function;
+interface IToggleProps {
+  on?: boolean;
+  onChange?(e: ChangeEvent<HTMLInputElement>): void;
 }
 
-const Toggle = ({ on = false, onChange }: Props) => {
+const Toggle = ({ on = false, onChange }: IToggleProps) => {
   const [checked, toggle] = useToggle(on);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     toggle();
-    onChange && onChange(e);
+    onChange?.(e);
   };
 
   return (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { userInputError } from "../interfaces/error";
 import { userInput } from "../interfaces/user";
 
-interface Props {
+interface IUseFormProps {
   initialValue: userInput;
   validate: (values: userInput) => userInputError;
   onSubmit: Function;
@@ -13,7 +13,7 @@ const useForm = ({
   initialValue = { email: "", password: "" },
   validate,
   onSubmit,
-}: Props) => {
+}: IUseFormProps) => {
   const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
