@@ -2,29 +2,36 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 
 import { useTodos } from "../../context/TodoProvider";
+import { todoData } from "../../interfaces/todo";
 import Toggle from "../base/Toggle";
 
-const Todo = ({ id, todo, isCompleted, ...props }) => {
+interface ITodoProps {
+  id: string;
+  todo: string;
+  isCompleted: boolean;
+}
+
+const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
   const { updateTodo, removeTodo } = useTodos();
   const [updateContent, setUpdateContent] = useState(todo);
   const [updateFlag, setUpdateFlag] = useState(false);
 
-  const handleUpdateClick = (e) => {
+  const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setUpdateFlag((prev) => !prev);
   };
 
-  const handleCancelClick = (e) => {
+  const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setUpdateContent(todo);
     setUpdateFlag((prev) => !prev);
   };
 
-  const handleUpdateSubmitClick = (e) => {
+  const handleUpdateSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (updateFlag) {
-      updateTodo({ id, todo: updateContent });
+      updateTodo({ id, todo: updateContent } as todoData);
     }
 
     setUpdateFlag((prev) => !prev);
@@ -34,7 +41,9 @@ const Todo = ({ id, todo, isCompleted, ...props }) => {
     <ListItem {...props}>
       <Toggle
         on={isCompleted}
-        onChange={(e) => updateTodo({ id, isCompleted: e.target.checked })}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          updateTodo({ id, isCompleted: e.target.checked } as todoData)
+        }
       />
       {updateFlag ? (
         <div>
@@ -104,7 +113,8 @@ const Content = styled.span`
   flex: 1;
   margin-left: 8px;
   font-size: 14px;
-  text-decoration: ${({ complete }) => (complete ? "line-through" : "none")};
+  text-decoration: ${({ complete }: { complete: boolean }) =>
+    complete ? "line-through" : "none"};
 `;
 
 const Button = styled.button`

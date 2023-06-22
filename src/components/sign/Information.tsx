@@ -2,7 +2,11 @@ import styled from "@emotion/styled";
 
 import { Input } from "../base";
 
-const Information = ({ handleInputChange, props }) => {
+interface Props {
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Information = ({ handleInputChange }: Props) => {
   return (
     <Container>
       <Input

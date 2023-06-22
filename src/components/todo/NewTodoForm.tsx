@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useTodos } from "../../context/TodoProvider";
 import { Button as SubmitButton, Input } from "../base";
 
-const NewTodoForm = (props) => {
+const NewTodoForm = () => {
   const [todo, setTodo] = useState("");
   const { addTodo } = useTodos();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     addTodo(todo);

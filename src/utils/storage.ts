@@ -1,6 +1,6 @@
 const storage = localStorage;
 
-export const getLocalStorage = (key, defaultValue = "") => {
+export const getLocalStorage = (key: string, defaultValue = "") => {
   try {
     const storedValue = JSON.parse(storage.getItem(key) || '""');
 
@@ -11,7 +11,7 @@ export const getLocalStorage = (key, defaultValue = "") => {
   }
 };
 
-export const setLocalStorage = (key, value) => {
+export const setLocalStorage = <T>(key: string, value: T) => {
   try {
     storage.setItem(key, JSON.stringify(value));
   } catch (error) {
@@ -19,7 +19,7 @@ export const setLocalStorage = (key, value) => {
   }
 };
 
-export const removeLocalStorage = (key) => {
+export const removeLocalStorage = (key: string) => {
   try {
     storage.removeItem(key);
   } catch (error) {

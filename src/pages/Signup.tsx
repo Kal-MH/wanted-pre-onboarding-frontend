@@ -2,29 +2,27 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { postSignIn } from "../apis/sign";
+import { postSignUp } from "../apis/sign";
 import { Button } from "../components/base";
 import Information from "../components/sign/Information";
 import useForm from "../hooks/useForm";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { userInput } from "../interfaces/user";
 import { ROUTES, STORAGE_KEYS } from "../utils/constants";
 import { validateInput } from "../utils/validateInput";
 
-const Signin = () => {
+const Signup = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useLocalStorage(STORAGE_KEYS.TOKEN, "");
+  const [token] = useLocalStorage(STORAGE_KEYS.TOKEN, "");
   const { errors, handleInputChange, handleSubmit } = useForm({
-    initialValue: [],
+    initialValue: {},
     validate: validateInput,
-    onSubmit: async (values) => {
+    onSubmit: async (values: userInput) => {
       try {
-        const { access_token } = await postSignIn(values);
-        access_token && setToken(access_token);
-
-        navigate(ROUTES.TODO);
+        await postSignUp(values);
+        navigate(ROUTES.SIGNIN);
       } catch (e) {
         alert(e);
-        navigate(ROUTES.SIGNUP);
       }
     },
   });
@@ -39,16 +37,16 @@ const Signin = () => {
     <Container>
       <Information handleInputChange={handleInputChange} />
       <Button
-        data-testid='signin-button'
-        disabled={errors}
+        data-testid='signup-button'
+        disabled={errors ? true : false}
         onClick={handleSubmit}>
-        Sign In
+        Sign Up
       </Button>
     </Container>
   );
 };
 
-export default Signin;
+export default Signup;
 
 const Container = styled.div`
   display: flex;

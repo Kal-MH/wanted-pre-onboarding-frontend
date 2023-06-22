@@ -1,11 +1,24 @@
 import { useState } from "react";
 
-const useForm = ({ initialValue, validate, onSubmit }) => {
+import { userInputError } from "../interfaces/error";
+import { userInput } from "../interfaces/user";
+
+interface IUseFormProps {
+  initialValue: userInput;
+  validate: (values: userInput) => userInputError;
+  onSubmit: Function;
+}
+
+const useForm = ({
+  initialValue = { email: "", password: "" },
+  validate,
+  onSubmit,
+}: IUseFormProps) => {
   const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     const newValues = { ...values, [name]: value };
@@ -14,7 +27,7 @@ const useForm = ({ initialValue, validate, onSubmit }) => {
     setErrors(newErrors);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     setIsLoading(true);

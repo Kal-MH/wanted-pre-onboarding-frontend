@@ -1,5 +1,8 @@
-export const validateInput = (values) => {
-  const newError = {};
+import { userInputError } from "../interfaces/error";
+import { userInput } from "../interfaces/user";
+
+export const validateInput = (values: userInput) => {
+  const newError = {} as userInputError;
   const { email, password } = values;
 
   const passwordRegex = /^.{8,}$/;

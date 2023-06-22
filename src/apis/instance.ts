@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, Method } from "axios";
 
 import { STORAGE_KEYS } from "../utils/constants";
 import { getLocalStorage } from "../utils/storage";
 
 const API_END_POINT = "https://www.pre-onboarding-selection-task.shop/";
 
-const METHOD = {
+const METHOD: Record<string, Method> = {
   GET: "get",
   POST: "post",
   DELETE: "delete",
@@ -22,7 +22,7 @@ const defaultInstance = axios.create({
   },
 });
 
-const getRequestConfig = (config) => {
+const getRequestConfig = (config: AxiosRequestConfig) => {
   const token = getLocalStorage(STORAGE_KEYS.TOKEN);
 
   return {
@@ -34,7 +34,7 @@ const getRequestConfig = (config) => {
   };
 };
 
-const getDefaultInstance = (method) => (config) => {
+const getDefaultInstance = (method: Method) => (config: AxiosRequestConfig) => {
   return defaultInstance({ ...getRequestConfig(config), method });
 };
 

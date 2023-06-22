@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 
 import Header from "../components/base/Header";
 import Nav from "../components/shared/Nav";
 
-const DefaultTemplate = ({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+const DefaultTemplate = ({ children }: Props) => {
   return (
     <Fragment>
       <Nav />
