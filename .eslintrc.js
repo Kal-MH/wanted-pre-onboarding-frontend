@@ -27,5 +27,14 @@ module.exports = {
     "simple-import-sort/exports": "error",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        types: {
+          Function: false,
+        },
+        extendDefaults: true,
+      },
+    ],
   },
 };
