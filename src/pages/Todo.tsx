@@ -11,6 +11,7 @@ import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
 import TodoProvider from "../context/TodoProvider";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { todoData } from "../interfaces/todo";
 
 const SIGNIN = "/signin";
 
@@ -18,7 +19,7 @@ const Todo = () => {
   const navigate = useNavigate();
   const [token] = useLocalStorage("token", "");
 
-  const handleCreateTodo = useCallback(async (content) => {
+  const handleCreateTodo = useCallback(async (content: string) => {
     try {
       const data = await postCreateTodos(content);
 
@@ -28,7 +29,7 @@ const Todo = () => {
     }
   }, []);
 
-  const handleDeleteTodo = useCallback(async (id) => {
+  const handleDeleteTodo = useCallback(async (id: string) => {
     try {
       await deleteTodos(id);
     } catch (e) {
@@ -36,7 +37,7 @@ const Todo = () => {
     }
   }, []);
 
-  const handleUpdateTodo = useCallback(async (props) => {
+  const handleUpdateTodo = useCallback(async (props: todoData) => {
     try {
       await updateTodos(props);
     } catch (e) {

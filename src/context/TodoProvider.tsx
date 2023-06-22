@@ -1,9 +1,25 @@
 import { createContext, useContext, useEffect } from "react";
 
 import useLocalStorage from "../hooks/useLocalStorage";
+import { todoData } from "../interfaces/todo";
 import { STORAGE_KEYS } from "../utils/constants";
 
-const TodoContext = createContext();
+interface TodoProviderProps {
+  children: React.ReactNode;
+  handleGetTodo: Function;
+  handleCreateTodo: Function;
+  handleDeleteTodo: Function;
+  handleUpdateTodo: Function;
+}
+
+interface TodoContextProps {
+  todos: todoData[];
+  addTodo: (content: string) => Promise<void>;
+  updateTodo: (tood: todoData) => Promise<void>;
+  removeTodo: (id: string) => Promise<void>;
+}
+
+const TodoContext = createContext({} as TodoContextProps);
 
 export const useTodos = () => useContext(TodoContext);
 
@@ -13,8 +29,11 @@ const TodoProvider = ({
   handleCreateTodo,
   handleDeleteTodo,
   handleUpdateTodo,
-}) => {
-  const [todos, setTodos] = useLocalStorage(STORAGE_KEYS.TODOS, []);
+}: TodoProviderProps) => {
+  const [todos, setTodos] = useLocalStorage(
+    STORAGE_KEYS.TODOS,
+    [] as todoData[]
+  );
 
   useEffect(() => {
     const initTodos = async () => {
@@ -26,7 +45,7 @@ const TodoProvider = ({
     initTodos();
   }, []);
 
-  const addTodo = async (content) => {
+  const addTodo = async (content: string) => {
     const { id, isCompleted, todo } = await handleCreateTodo(content);
 
     setTodos([
@@ -39,8 +58,8 @@ const TodoProvider = ({
     ]);
   };
 
-  const updateTodo = async ({ id, todo, isCompleted }) => {
-    const filteredItem = todos.filter((item) => item.id === id)[0];
+  const updateTodo = async ({ id, todo, isCompleted }: todoData) => {
+    const filteredItem = todos.filter((item: todoData) => item.id === id)[0];
     const config = {
       id,
       todo: todo ? todo : filteredItem.todo,
@@ -49,12 +68,14 @@ const TodoProvider = ({
     };
 
     await handleUpdateTodo({ ...config });
-    setTodos(todos.map((item) => (item.id === id ? { ...config } : item)));
+    setTodos(
+      todos.map((item: todoData) => (item.id === id ? { ...config } : item))
+    );
   };
 
-  const removeTodo = async (id) => {
+  const removeTodo = async (id: string) => {
     await handleDeleteTodo(id);
-    setTodos(todos.filter((item) => item.id !== id));
+    setTodos(todos.filter((item: todoData) => item.id !== id));
   };
 
   return (

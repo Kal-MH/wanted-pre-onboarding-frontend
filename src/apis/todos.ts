@@ -1,3 +1,5 @@
+import { todoData } from "../interfaces/todo";
+import getErrorWithMessage from "../utils/getErrorWithMessage";
 import HTTP from "./instance";
 
 export const getTodos = async () => {
@@ -7,13 +9,12 @@ export const getTodos = async () => {
     });
 
     return data;
-  } catch (e) {
-    const { message } = e.response.data;
-    throw new Error(message);
+  } catch (e: unknown) {
+    throw new Error(getErrorWithMessage(e).response.data);
   }
 };
 
-export const postCreateTodos = async (todo) => {
+export const postCreateTodos = async (todo: string) => {
   try {
     const { data } = await HTTP.post({
       url: "/todos",
@@ -24,12 +25,11 @@ export const postCreateTodos = async (todo) => {
 
     return data;
   } catch (e) {
-    const { message } = e.response.data;
-    throw new Error(message);
+    throw new Error(getErrorWithMessage(e).response.data);
   }
 };
 
-export const deleteTodos = async (id) => {
+export const deleteTodos = async (id: string) => {
   try {
     const { data } = await HTTP.delete({
       url: `/todos/${id}`,
@@ -37,12 +37,11 @@ export const deleteTodos = async (id) => {
 
     return data;
   } catch (e) {
-    const { message } = e.response.data;
-    throw new Error(message);
+    throw new Error(getErrorWithMessage(e).response.data);
   }
 };
 
-export const updateTodos = async ({ id, todo, isCompleted }) => {
+export const updateTodos = async ({ id, todo, isCompleted }: todoData) => {
   try {
     const { data } = await HTTP.put({
       url: `/todos/${id}`,
@@ -54,7 +53,6 @@ export const updateTodos = async ({ id, todo, isCompleted }) => {
 
     return data;
   } catch (e) {
-    const { message } = e.response.data;
-    throw new Error(message);
+    throw new Error(getErrorWithMessage(e).response.data);
   }
 };
