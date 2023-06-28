@@ -8,17 +8,10 @@ interface IToggleProps {
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
 }
 
-const Toggle = ({ on = false, onChange }: IToggleProps) => {
-  const [checked, toggle] = useToggle(on);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    toggle();
-    onChange?.(e);
-  };
-
+const Toggle = ({ onChange }: IToggleProps) => {
   return (
     <ToggleContainer>
-      <ToggleInput type='checkbox' checked={checked} onChange={handleChange} />
+      <ToggleInput type='checkbox' onChange={onChange} />
       <ToggleSwitch />
     </ToggleContainer>
   );

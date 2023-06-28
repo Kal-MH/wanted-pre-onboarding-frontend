@@ -1,14 +1,21 @@
 import styled from "@emotion/styled";
 
+import { todoData } from "../../interfaces/todo";
 import Todo from "./Todo";
 
-const todos = [
-  { id: "12990", todo: "hello", isCompleted: false, userId: 246 },
-  { id: "12991", todo: "hello1", isCompleted: false, userId: 247 },
-  { id: "12992", todo: "hello2", isCompleted: false, userId: 248 },
-];
+interface ITodoListProps {
+  todos: todoData[];
+  onToggleUpdate: (value: Pick<todoData, "id" & "isCompleted">) => void;
+  onContentUpdate: (value: Pick<todoData, "id" & "todo">) => void;
+  onRemoveClick: (value: Pick<todoData, "id">) => void;
+}
 
-const TodoList = () => {
+const TodoList = ({
+  todos,
+  onToggleUpdate,
+  onContentUpdate,
+  onRemoveClick,
+}: ITodoListProps) => {
   return (
     <UnorderedList>
       {(todos || []).map((todo) => (
@@ -17,6 +24,9 @@ const TodoList = () => {
           id={todo.id}
           todo={todo.todo}
           isCompleted={todo.isCompleted}
+          onToggleUpdate={onToggleUpdate}
+          onContentUpdate={onContentUpdate}
+          onRemoveClick={onRemoveClick}
         />
       ))}
     </UnorderedList>
