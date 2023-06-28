@@ -9,7 +9,7 @@ interface ITodoProps {
   todo: string;
   isCompleted: boolean;
   onToggleUpdate: (value: Pick<todoData, "id" & "isCompleted">) => void;
-  onContentUpdate: (value: Pick<todoData, "id" & "todo">) => void;
+  onContentUpdate: (value: todoData) => void;
   onRemoveClick: (value: Pick<todoData, "id">) => void;
 }
 
@@ -41,7 +41,7 @@ const Todo = ({
     e.preventDefault();
     console.log("updateSubmit");
 
-    onContentUpdate({ todo: updateContent });
+    onContentUpdate({ id, todo: updateContent, isCompleted });
   };
 
   const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {

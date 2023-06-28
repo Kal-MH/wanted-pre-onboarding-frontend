@@ -6,7 +6,7 @@ import Todo from "./Todo";
 interface ITodoListProps {
   todos: todoData[];
   onToggleUpdate: (value: Pick<todoData, "id" & "isCompleted">) => void;
-  onContentUpdate: (value: Pick<todoData, "id" & "todo">) => void;
+  onContentUpdate: (value: todoData) => void;
   onRemoveClick: (value: Pick<todoData, "id">) => void;
 }
 
