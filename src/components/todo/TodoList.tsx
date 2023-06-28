@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
 
-import { useTodos } from "../../context/TodoProvider";
 import Todo from "./Todo";
 
-const TodoList = () => {
-  const { todos } = useTodos();
+const todos = [
+  { id: "12990", todo: "hello", isCompleted: false, userId: 246 },
+  { id: "12991", todo: "hello1", isCompleted: false, userId: 247 },
+  { id: "12992", todo: "hello2", isCompleted: false, userId: 248 },
+];
 
+const TodoList = () => {
   return (
     <UnorderedList>
       {(todos || []).map((todo) => (

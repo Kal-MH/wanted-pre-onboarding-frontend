@@ -1,8 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 
-import { useTodos } from "../../context/TodoProvider";
-import { todoData } from "../../interfaces/todo";
 import Toggle from "../base/Toggle";
 
 interface ITodoProps {
@@ -12,77 +9,18 @@ interface ITodoProps {
 }
 
 const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
-  const { updateTodo, removeTodo } = useTodos();
-  const [updateContent, setUpdateContent] = useState(todo);
-  const [updateFlag, setUpdateFlag] = useState(false);
-
-  const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setUpdateFlag((prev) => !prev);
-  };
-
-  const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setUpdateContent(todo);
-    setUpdateFlag((prev) => !prev);
-  };
-
-  const handleUpdateSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (updateFlag) {
-      updateTodo({ id, todo: updateContent } as todoData);
-    }
-
-    setUpdateFlag((prev) => !prev);
-  };
-
   return (
     <ListItem {...props}>
-      <Toggle
-        on={isCompleted}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          updateTodo({ id, isCompleted: e.target.checked } as todoData)
-        }
-      />
-      {updateFlag ? (
-        <div>
-          <input
-            data-testid='modify-input'
-            type='text'
-            value={updateContent}
-            onChange={(e) => setUpdateContent(e.target.value)}
-          />
-          <Button
-            data-testid='submit-button'
-            color='blueviolet'
-            onClick={handleUpdateSubmitClick}>
-            Submit
-          </Button>
-          <Button
-            data-testid='cancel-button'
-            color='red'
-            onClick={handleCancelClick}>
-            Cancel
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <Content complete={isCompleted}>{todo}</Content>
-          <Button
-            data-testid='modify-button'
-            color='blueviolet'
-            onClick={handleUpdateClick}>
-            Update
-          </Button>
-          <Button
-            data-testid='delete-button'
-            color='red'
-            onClick={() => removeTodo(id)}>
-            Remove
-          </Button>
-        </div>
-      )}
+      <Toggle on={isCompleted} />
+      <div>
+        <Content complete={isCompleted}>{todo}</Content>
+        <Button data-testid='modify-button' color='blueviolet'>
+          Update
+        </Button>
+        <Button data-testid='delete-button' color='red'>
+          Remove
+        </Button>
+      </div>
     </ListItem>
   );
 };
