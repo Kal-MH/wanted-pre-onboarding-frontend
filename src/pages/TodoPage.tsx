@@ -1,12 +1,13 @@
 import { Fragment, useState } from "react";
 
+import { Header } from "../components/base";
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
 import { todoData } from "../interfaces/todo";
 
 let id = 12993;
 
-const Todos = () => {
+const TodoPage = () => {
   const [todos, setTodos] = useState([
     { id: "12990", todo: "hello", isCompleted: false },
     { id: "12991", todo: "hello1", isCompleted: false },
@@ -36,15 +37,18 @@ const Todos = () => {
 
   return (
     <Fragment>
-      <NewTodoForm onTodoCreate={onTodoCreate} />
-      <TodoList
-        todos={todos}
-        onToggleUpdate={onToggleUpdate}
-        onContentUpdate={onContentUpdate}
-        onRemoveClick={onRemoveClick}
-      />
+      <Header>Todo Page</Header>
+      <main>
+        <NewTodoForm onTodoCreate={onTodoCreate} />
+        <TodoList
+          todos={todos}
+          onToggleUpdate={onToggleUpdate}
+          onContentUpdate={onContentUpdate}
+          onRemoveClick={onRemoveClick}
+        />
+      </main>
     </Fragment>
   );
 };
 
-export default Todos;
+export default TodoPage;

@@ -1,8 +1,10 @@
+import { Header } from "../components/base";
+
 const NotFound = () => {
   return (
-    <div>
+    <Header>
       <h1>Not Found Page!</h1>
-    </div>
+    </Header>
   );
 };
 

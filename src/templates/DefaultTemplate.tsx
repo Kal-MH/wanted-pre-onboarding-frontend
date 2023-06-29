@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Fragment, ReactNode } from "react";
 
 import Header from "../components/base/Header";
-import Nav from "../components/shared/Nav";
+import Nav from "../components/Nav";
 
 interface Props {
   children: ReactNode;
@@ -12,10 +12,7 @@ const DefaultTemplate = ({ children }: Props) => {
   return (
     <Fragment>
       <Nav />
-      <Container>
-        <Header>Todo</Header>
-        <main>{children}</main>
-      </Container>
+      <Container>{children}</Container>
     </Fragment>
   );
 };

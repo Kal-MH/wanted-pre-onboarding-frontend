@@ -1,17 +1,14 @@
 import styled from "@emotion/styled";
+import { Fragment } from "react";
+
+import { Header } from "../components/base";
 
 const Home = () => {
   return (
-    <Container>
-      <h1>Welcome!!</h1>
-    </Container>
+    <Fragment>
+      <Header>Todo Welcome!</Header>
+    </Fragment>
   );
 };
 
 export default Home;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

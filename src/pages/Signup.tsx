@@ -1,40 +1,22 @@
-import styled from "@emotion/styled";
-import { ChangeEvent, useState } from "react";
+import { Fragment } from "react";
 
-import { Button, Input } from "../components/base";
+import { Header } from "../components/base";
+import SearchForm from "../components/sign/SeachForm";
+import { userInput } from "../interfaces/user";
 
 const Signup = () => {
-  const [inputValue, setInputValue] = useState({ email: "", password: "" });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+  const handleSearchFormSubmit = (inputValue: userInput) => {
+    console.log(inputValue);
+    //TODO: API로직 수행
   };
-
   return (
-    <Container>
-      <Input
-        data-testid='email-input'
-        name='email'
-        placeholder='email'
-        onChange={handleInputChange}
-      />
-      <Input
-        data-testid='password-input'
-        name='password'
-        type='password'
-        placeholder='password'
-        onChange={handleInputChange}
-      />
-      <Button data-testid='signup-button'>Sign Up</Button>
-    </Container>
+    <Fragment>
+      <Header>Sign Up</Header>
+      <main>
+        <SearchForm buttonTitle='Sign Up' onSubmit={handleSearchFormSubmit} />
+      </main>
+    </Fragment>
   );
 };
 
 export default Signup;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center;
-`;

@@ -22,8 +22,8 @@ const Todo = ({
   onRemoveClick,
   ...props
 }: ITodoProps) => {
-  const [updateContent, setUpdateContent] = useState("");
-  const isUpdate = updateContent !== "";
+  const [updatedContent, setUpdatedContent] = useState("");
+  const isUpdate = updatedContent !== "";
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.checked);
@@ -34,19 +34,19 @@ const Todo = ({
     e.preventDefault();
     console.log("update");
 
-    setUpdateContent(todo);
+    setUpdatedContent(todo);
   };
 
   const handleUpdateSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("updateSubmit");
 
-    onContentUpdate({ id, todo: updateContent, isCompleted });
+    onContentUpdate({ id, todo: updatedContent, isCompleted });
   };
 
   const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setUpdateContent("");
+    setUpdatedContent("");
   };
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,8 +64,8 @@ const Todo = ({
           <input
             data-testid='modify-input'
             type='text'
-            value={updateContent}
-            onChange={(e) => setUpdateContent(e.target.value)}
+            value={updatedContent}
+            onChange={(e) => setUpdatedContent(e.target.value)}
           />
         ) : (
           <Content complete={isCompleted}>{todo}</Content>
