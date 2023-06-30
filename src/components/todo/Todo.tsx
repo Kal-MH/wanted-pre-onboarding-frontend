@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { todoData } from "../../interfaces/todo";
 import Toggle from "../base/Toggle";
@@ -23,6 +23,7 @@ const Todo = ({
   ...props
 }: ITodoProps) => {
   const [updatedContent, setUpdatedContent] = useState("");
+  const ref = useRef<HTMLInputElement>(null);
   const isUpdate = updatedContent !== "";
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +57,12 @@ const Todo = ({
     onRemoveClick({ id });
   };
 
+  useEffect(() => {
+    if (isUpdate) {
+      ref.current?.focus();
+    }
+  }, [isUpdate]);
+
   return (
     <ListItem {...props}>
       <Toggle on={isCompleted} onChange={handleToggleChange} />
@@ -65,6 +72,7 @@ const Todo = ({
             data-testid='modify-input'
             type='text'
             value={updatedContent}
+            ref={ref}
             onChange={(e) => setUpdatedContent(e.target.value)}
           />
         ) : (
@@ -127,4 +135,14 @@ const Button = styled.button`
   border: none;
   background-color: ${({ color }) => color};
   cursor: pointer;
+`;
+
+const Container = styled.div`
+  input.hidden {
+    display: none;
+  }
+
+  input.show {
+    display: inline-block;
+  }
 `;
