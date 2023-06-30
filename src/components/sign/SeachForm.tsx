@@ -22,7 +22,7 @@ const SearchForm = ({ buttonTitle, onSubmit }: ISearchFormProps) => {
   };
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+    <S.Form onSubmit={handleFormSubmit}>
       <Input
         data-testid='email-input'
         name='email'
@@ -37,15 +37,17 @@ const SearchForm = ({ buttonTitle, onSubmit }: ISearchFormProps) => {
         onChange={handleInputChange}
       />
       <Button data-testid='signin-button'>{buttonTitle}</Button>
-    </Form>
+    </S.Form>
   );
 };
 
 export default SearchForm;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center;
-`;
+const S = {
+  Form: styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  `,
+};

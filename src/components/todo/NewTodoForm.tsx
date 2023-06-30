@@ -20,20 +20,23 @@ const NewTodoForm = ({ onTodoCreate }: INewTodoFormProps) => {
   };
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+    <S.Form onSubmit={handleFormSubmit}>
       <Input
         data-testid='new-todo-input'
         type='text'
         value={inputValue}
         onChange={handleInputChange}
+        autoFocus
       />
       <Button data-testid='new-todo-add-button'>Add</Button>
-    </Form>
+    </S.Form>
   );
 };
 
 export default NewTodoForm;
 
-const Form = styled.form`
-  width: 400px;
-`;
+const S = {
+  Form: styled.form`
+    width: 400px;
+  `,
+};

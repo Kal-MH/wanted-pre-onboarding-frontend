@@ -17,7 +17,7 @@ const TodoList = ({
   onRemoveClick,
 }: ITodoListProps) => {
   return (
-    <UnorderedList>
+    <S.UnorderedList>
       {(todos || []).map((todo) => (
         <Todo
           key={todo.id}
@@ -29,20 +29,22 @@ const TodoList = ({
           onRemoveClick={onRemoveClick}
         />
       ))}
-    </UnorderedList>
+    </S.UnorderedList>
   );
 };
 
 export default TodoList;
 
-const UnorderedList = styled.ul`
-  width: 400px;
-  margin-top: 10px 0;
-  padding: 0px;
+const S = {
+  UnorderedList: styled.ul`
+    width: 400px;
+    margin-top: 10px 0;
+    padding: 0px;
 
-  & > li {
-    &:not(:first-of-type) {
-      margin-top: 8px;
+    & > li {
+      &:not(:first-of-type) {
+        margin-top: 8px;
+      }
     }
-  }
-`;
+  `,
+};

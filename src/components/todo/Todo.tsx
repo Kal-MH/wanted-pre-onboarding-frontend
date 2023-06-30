@@ -64,7 +64,7 @@ const Todo = ({
   }, [isUpdate]);
 
   return (
-    <ListItem {...props}>
+    <S.ListItem {...props}>
       <Toggle on={isCompleted} onChange={handleToggleChange} />
       <div>
         {isUpdate ? (
@@ -72,77 +72,65 @@ const Todo = ({
             data-testid='modify-input'
             type='text'
             value={updatedContent}
-            ref={ref}
             onChange={(e) => setUpdatedContent(e.target.value)}
           />
         ) : (
-          <Content complete={isCompleted}>{todo}</Content>
+          <S.Content complete={isCompleted}>{todo}</S.Content>
         )}
-
-        <Button
+        <S.Button
           data-testid='modify-button'
           color='blueviolet'
           onClick={isUpdate ? handleUpdateSubmitClick : handleUpdateClick}>
           {isUpdate ? "Submit" : "Update"}
-        </Button>
-        <Button
+        </S.Button>
+        <S.Button
           data-testid='delete-button'
           color='red'
           onClick={isUpdate ? handleCancelClick : handleRemoveClick}>
           {isUpdate ? "Cancel" : "Remove"}
-        </Button>
+        </S.Button>
       </div>
-    </ListItem>
+    </S.ListItem>
   );
 };
 
 export default Todo;
 
-const ListItem = styled.li`
-  display: flex;
-  width: 400px;
-  height: 40px;
-  align-items: center;
-  padding: 0 8px;
-  box-sizing: border-box;
-  border-radius: 16px;
-  background-color: white;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  list-style: none;
-
-  & > div {
+const S = {
+  ListItem: styled.li`
     display: flex;
-    flex: 1;
+    width: 400px;
+    height: 40px;
     align-items: center;
-    padding: 0 5px;
-  }
-`;
+    padding: 0 8px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    list-style: none;
 
-const Content = styled.span`
-  flex: 1;
-  margin-left: 8px;
-  font-size: 14px;
-  text-decoration: ${({ complete }: { complete: boolean }) =>
-    complete ? "line-through" : "none"};
-`;
-
-const Button = styled.button`
-  width: 60px;
-  height: 24px;
-  margin-left: 8px;
-  color: white;
-  border-radius: 8px;
-  border: none;
-  background-color: ${({ color }) => color};
-  cursor: pointer;
-`;
-
-const Container = styled.div`
-  input.hidden {
-    display: none;
-  }
-
-  input.show {
-    display: inline-block;
-  }
-`;
+    & > div {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding: 0 5px;
+    }
+  `,
+  Content: styled.span`
+    flex: 1;
+    margin-left: 8px;
+    font-size: 14px;
+    text-decoration: ${({ complete }: { complete: boolean }) =>
+      complete ? "line-through" : "none"};
+  `,
+  Button: styled.button`
+    width: 60px;
+    height: 24px;
+    margin-left: 8px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: ${({ color }) => color};
+    cursor: pointer;
+  `,
+};
