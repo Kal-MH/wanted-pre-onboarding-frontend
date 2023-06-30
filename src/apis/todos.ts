@@ -10,7 +10,8 @@ export const getTodos = async () => {
 
     return data;
   } catch (e: unknown) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };
 
@@ -25,7 +26,8 @@ export const postCreateTodos = async (todo: string) => {
 
     return data;
   } catch (e) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };
 
@@ -37,7 +39,8 @@ export const deleteTodos = async (id: string) => {
 
     return data;
   } catch (e) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };
 
@@ -53,6 +56,7 @@ export const updateTodos = async ({ id, todo, isCompleted }: todoData) => {
 
     return data;
   } catch (e) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };

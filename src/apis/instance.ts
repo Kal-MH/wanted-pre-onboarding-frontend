@@ -1,4 +1,9 @@
-import axios, { AxiosRequestConfig, Method } from "axios";
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+  Method,
+} from "axios";
 
 import { STORAGE_KEYS } from "../utils/constants";
 import { getLocalStorage } from "../utils/storage";
@@ -17,25 +22,56 @@ const { GET, POST, DELETE, PUT, PATCH } = METHOD;
 
 const defaultInstance = axios.create({
   baseURL: API_END_POINT,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-const getRequestConfig = (config: AxiosRequestConfig) => {
-  const token = getLocalStorage(STORAGE_KEYS.TOKEN);
+defaultInstance.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = getLocalStorage(STORAGE_KEYS.TOKEN, "");
 
-  return {
-    ...config,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token ? `Bearer ${token}` : "",
-    },
-  };
-};
+    config.headers["Content-Type"] = "application/json";
+    if (token) {
+      config.headers["Authorization"] = token;
+    }
+
+    return config;
+  },
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
+  }
+);
+
+defaultInstance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error) => {
+    const statusCode = error.response?.status;
+
+    if (statusCode === 401) {
+      error.response.status = 401;
+      error.response.statusText = "Unauthorized";
+    } else if (statusCode === 404) {
+      error.response.status = 404;
+      error.response.statusText = "Not Found";
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// const getRequestConfig = (config: AxiosRequestConfig) => {
+//   const token = getLocalStorage(STORAGE_KEYS.TOKEN);
+
+//   return {
+//     ...config,
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: token ? `Bearer ${token}` : "",
+//     },
+//   };
+// };
 
 const getDefaultInstance = (method: Method) => (config: AxiosRequestConfig) => {
-  return defaultInstance({ ...getRequestConfig(config), method });
+  return defaultInstance({ ...config, method });
 };
 
 const HTTP = {

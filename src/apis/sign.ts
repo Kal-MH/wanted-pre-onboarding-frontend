@@ -12,7 +12,8 @@ export const postSignUp = async ({ email, password }: userInput) => {
       },
     });
   } catch (e) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };
 
@@ -28,6 +29,7 @@ export const postSignIn = async ({ email, password }: userInput) => {
 
     return data;
   } catch (e) {
-    throw new Error(getErrorWithMessage(e).response.data);
+    const errorObj = getErrorWithMessage(e).response;
+    throw new Error(errorObj.statusText || errorObj.data);
   }
 };

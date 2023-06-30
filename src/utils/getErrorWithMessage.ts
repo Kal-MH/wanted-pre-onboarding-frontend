@@ -1,12 +1,13 @@
 type ErrorWithMessage = {
   response: {
-    data: string;
+    status?: number;
+    statusText?: string;
+    data?: string;
   };
 };
+
 const isErrorWithMessage = (error: unknown) => {
-  return (
-    error && typeof error === "object" && "response" in error && "data" in error
-  );
+  return error && typeof error === "object" && "response" in error;
 };
 
 const getErrorWithMessage = (error: unknown): ErrorWithMessage => {

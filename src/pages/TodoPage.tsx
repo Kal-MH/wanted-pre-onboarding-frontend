@@ -1,5 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
+import { getTodos } from "../apis/todos";
 import { Header } from "../components/base";
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
@@ -13,6 +14,16 @@ const TodoPage = () => {
     { id: "12991", todo: "hello1", isCompleted: false },
     { id: "12992", todo: "hello2", isCompleted: false },
   ] as todoData[]);
+
+  useEffect(() => {
+    const initTodos = async () => {
+      const data = await getTodos();
+
+      setTodos(data);
+    };
+
+    initTodos();
+  }, []);
 
   const onTodoCreate = (inputValue: string) => {
     //Todo: button submit
