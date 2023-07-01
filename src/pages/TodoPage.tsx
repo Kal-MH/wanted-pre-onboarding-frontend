@@ -1,4 +1,4 @@
-import { Fragment, ReducerState, useEffect, useReducer, useState } from "react";
+import { Fragment, useEffect, useReducer } from "react";
 
 import {
   deleteTodos,
@@ -30,9 +30,11 @@ const TodoPage = () => {
 
   const onTodoCreate = async (inputValue: string) => {
     try {
+      const data = await postCreateTodos(inputValue);
+
       dispatch({
         type: "Create",
-        todo: inputValue,
+        ...data,
       });
     } catch (e) {
       alert(e);
@@ -41,6 +43,8 @@ const TodoPage = () => {
 
   const onTodoUpdate = async (value: todoData) => {
     try {
+      await updateTodos(value);
+
       dispatch({
         type: "Update",
         id: value.id,
@@ -54,6 +58,8 @@ const TodoPage = () => {
 
   const onTodoRemove = async (id: string) => {
     try {
+      await deleteTodos(id);
+
       dispatch({
         type: "Remove",
         id,
