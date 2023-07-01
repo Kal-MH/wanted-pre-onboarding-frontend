@@ -5,17 +5,11 @@ import Todo from "./Todo";
 
 interface ITodoListProps {
   todos: todoData[];
-  onToggleUpdate: (value: Pick<todoData, "id" & "isCompleted">) => void;
-  onContentUpdate: (value: todoData) => void;
-  onRemoveClick: (value: Pick<todoData, "id">) => void;
+  onTodoUpdate: (value: todoData) => void;
+  onTodoRemove: (id: string) => void;
 }
 
-const TodoList = ({
-  todos,
-  onToggleUpdate,
-  onContentUpdate,
-  onRemoveClick,
-}: ITodoListProps) => {
+const TodoList = ({ todos, onTodoUpdate, onTodoRemove }: ITodoListProps) => {
   return (
     <S.UnorderedList>
       {(todos || []).map((todo) => (
@@ -24,9 +18,8 @@ const TodoList = ({
           id={todo.id}
           todo={todo.todo}
           isCompleted={todo.isCompleted}
-          onToggleUpdate={onToggleUpdate}
-          onContentUpdate={onContentUpdate}
-          onRemoveClick={onRemoveClick}
+          onTodoUpdate={onTodoUpdate}
+          onTodoRemove={onTodoRemove}
         />
       ))}
     </S.UnorderedList>

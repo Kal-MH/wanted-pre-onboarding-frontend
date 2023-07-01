@@ -8,18 +8,16 @@ interface ITodoProps {
   id: string;
   todo: string;
   isCompleted: boolean;
-  onToggleUpdate: (value: Pick<todoData, "id" & "isCompleted">) => void;
-  onContentUpdate: (value: todoData) => void;
-  onRemoveClick: (value: Pick<todoData, "id">) => void;
+  onTodoUpdate: (value: todoData) => void;
+  onTodoRemove: (id: string) => void;
 }
 
 const Todo = ({
   id,
   todo,
   isCompleted,
-  onToggleUpdate,
-  onContentUpdate,
-  onRemoveClick,
+  onTodoUpdate,
+  onTodoRemove,
   ...props
 }: ITodoProps) => {
   const [updatedContent, setUpdatedContent] = useState("");
@@ -27,22 +25,18 @@ const Todo = ({
   const isUpdate = updatedContent !== "";
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
-    onToggleUpdate({ id, isCompleted: e.target.checked });
+    onTodoUpdate({ id, todo, isCompleted: e.target.checked });
   };
 
   const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("update");
-
     setUpdatedContent(todo);
   };
 
   const handleUpdateSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("updateSubmit");
-
-    onContentUpdate({ id, todo: updatedContent, isCompleted });
+    onTodoUpdate({ id, todo: updatedContent, isCompleted });
+    setUpdatedContent("");
   };
 
   const handleCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,9 +46,7 @@ const Todo = ({
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("remove");
-
-    onRemoveClick({ id });
+    onTodoRemove(id);
   };
 
   useEffect(() => {
@@ -72,6 +64,7 @@ const Todo = ({
             data-testid='modify-input'
             type='text'
             value={updatedContent}
+            ref={ref}
             onChange={(e) => setUpdatedContent(e.target.value)}
           />
         ) : (

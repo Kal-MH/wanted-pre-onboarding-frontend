@@ -17,6 +17,7 @@ const NewTodoForm = ({ onTodoCreate }: INewTodoFormProps) => {
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onTodoCreate(inputValue);
+    setInputValue("");
   };
 
   return (

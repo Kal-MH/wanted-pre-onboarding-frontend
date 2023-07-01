@@ -8,10 +8,10 @@ interface IToggleProps {
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
 }
 
-const Toggle = ({ onChange }: IToggleProps) => {
+const Toggle = ({ on, onChange }: IToggleProps) => {
   return (
     <S.ToggleContainer>
-      <S.ToggleInput type='checkbox' onChange={onChange} />
+      <S.ToggleInput type='checkbox' onChange={onChange} checked={on} />
       <S.ToggleSwitch />
     </S.ToggleContainer>
   );

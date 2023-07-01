@@ -1,49 +1,66 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, ReducerState, useEffect, useReducer, useState } from "react";
 
-import { getTodos } from "../apis/todos";
+import {
+  deleteTodos,
+  getTodos,
+  postCreateTodos,
+  updateTodos,
+} from "../apis/todos";
 import { Header } from "../components/base";
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
 import { todoData } from "../interfaces/todo";
-
-let id = 12993;
+import todoReducer from "../utils/todoReducer";
 
 const TodoPage = () => {
-  const [todos, setTodos] = useState([
-    { id: "12990", todo: "hello", isCompleted: false },
-    { id: "12991", todo: "hello1", isCompleted: false },
-    { id: "12992", todo: "hello2", isCompleted: false },
-  ] as todoData[]);
+  const [todos, dispatch] = useReducer(todoReducer, []);
 
   useEffect(() => {
     const initTodos = async () => {
       const data = await getTodos();
 
-      setTodos(data);
+      dispatch({
+        type: "Init",
+        initialData: data,
+      });
     };
 
     initTodos();
   }, []);
 
-  const onTodoCreate = (inputValue: string) => {
-    //Todo: button submit
-    // 새로운 todo를 만들고, todoList를 가져와서 TodoList 컴포넌트에 넣어주기
-    setTodos([
-      ...todos,
-      { id: id++ + "", todo: inputValue, isCompleted: false },
-    ]);
+  const onTodoCreate = async (inputValue: string) => {
+    try {
+      dispatch({
+        type: "Create",
+        todo: inputValue,
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
-  const onToggleUpdate = (value: Pick<todoData, "id" & "isCompleted">) => {
-    console.log(value);
+  const onTodoUpdate = async (value: todoData) => {
+    try {
+      dispatch({
+        type: "Update",
+        id: value.id,
+        todo: value.todo,
+        isCompleted: value.isCompleted,
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
-  const onContentUpdate = (value: Pick<todoData, "id" & "todo">) => {
-    console.log(value);
-  };
-
-  const onRemoveClick = async (id: Pick<todoData, "id">) => {
-    console.log(id);
+  const onTodoRemove = async (id: string) => {
+    try {
+      dispatch({
+        type: "Remove",
+        id,
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
   return (
@@ -53,9 +70,8 @@ const TodoPage = () => {
         <NewTodoForm onTodoCreate={onTodoCreate} />
         <TodoList
           todos={todos}
-          onToggleUpdate={onToggleUpdate}
-          onContentUpdate={onContentUpdate}
-          onRemoveClick={onRemoveClick}
+          onTodoUpdate={onTodoUpdate}
+          onTodoRemove={onTodoRemove}
         />
       </main>
     </Fragment>
