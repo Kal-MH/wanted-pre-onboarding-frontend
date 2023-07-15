@@ -1,15 +1,11 @@
 import styled from "@emotion/styled";
 
-import { todoData } from "../../interfaces/todo";
+import { useTodoContext } from "../../context/TodoProvider";
 import Todo from "./Todo";
 
-interface ITodoListProps {
-  todos: todoData[];
-  onTodoUpdate: (value: todoData) => void;
-  onTodoRemove: (id: string) => void;
-}
+const TodoList = () => {
+  const { todos } = useTodoContext();
 
-const TodoList = ({ todos, onTodoUpdate, onTodoRemove }: ITodoListProps) => {
   return (
     <S.UnorderedList>
       {(todos || []).map((todo) => (
@@ -18,8 +14,6 @@ const TodoList = ({ todos, onTodoUpdate, onTodoRemove }: ITodoListProps) => {
           id={todo.id}
           todo={todo.todo}
           isCompleted={todo.isCompleted}
-          onTodoUpdate={onTodoUpdate}
-          onTodoRemove={onTodoRemove}
         />
       ))}
     </S.UnorderedList>

@@ -1,4 +1,10 @@
-import { Fragment, useEffect, useReducer } from "react";
+import {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useState,
+} from "react";
 
 import {
   deleteTodos,
@@ -9,77 +15,64 @@ import {
 import { Header } from "../components/base";
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
+import TodoProvider, { useTodoDispatchContext } from "../context/TodoProvider";
 import { todoData } from "../interfaces/todo";
-import todoReducer from "../utils/todoReducer";
 
 const TodoPage = () => {
-  const [todos, dispatch] = useReducer(todoReducer, []);
+  const [initialData, setInitialData] = useState([]);
 
   useEffect(() => {
-    const initTodos = async () => {
-      const data = await getTodos();
+    const initData = async () => {
+      try {
+        const data = await getTodos();
 
-      dispatch({
-        type: "Init",
-        initialData: data,
-      });
+        setInitialData(data);
+      } catch (e) {
+        return [];
+      }
     };
 
-    initTodos();
+    initData();
   }, []);
 
-  const onTodoCreate = async (inputValue: string) => {
-    try {
-      const data = await postCreateTodos(inputValue);
+  // const handleCreateTodo = async (inputValue: string) => {
+  //   try {
+  //     const data = await postCreateTodos(inputValue);
+  //     return data;
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
-      dispatch({
-        type: "Create",
-        ...data,
-      });
-    } catch (e) {
-      alert(e);
-    }
-  };
+  // const handleUpdateTodo = async (value: todoData) => {
+  //   try {
+  //     await updateTodos(value);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
-  const onTodoUpdate = async (value: todoData) => {
-    try {
-      await updateTodos(value);
-
-      dispatch({
-        type: "Update",
-        id: value.id,
-        todo: value.todo,
-        isCompleted: value.isCompleted,
-      });
-    } catch (e) {
-      alert(e);
-    }
-  };
-
-  const onTodoRemove = async (id: string) => {
-    try {
-      await deleteTodos(id);
-
-      dispatch({
-        type: "Remove",
-        id,
-      });
-    } catch (e) {
-      alert(e);
-    }
-  };
+  // const handleDeleteTodo = async (id: string) => {
+  //   try {
+  //     await deleteTodos(id);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
   return (
     <Fragment>
       <Header>Todo Page</Header>
-      <main>
-        <NewTodoForm onTodoCreate={onTodoCreate} />
-        <TodoList
-          todos={todos}
-          onTodoUpdate={onTodoUpdate}
-          onTodoRemove={onTodoRemove}
-        />
-      </main>
+      <TodoProvider
+        initialData={initialData}
+        handleCreateTodo={postCreateTodos}
+        handleUpdateTodo={updateTodos}
+        handleDeleteTodo={deleteTodos}>
+        <main>
+          <NewTodoForm />
+          <TodoList />
+        </main>
+      </TodoProvider>
     </Fragment>
   );
 };

@@ -1,26 +1,19 @@
 import styled from "@emotion/styled";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import { todoData } from "../../interfaces/todo";
+import { useTodoDispatchContext } from "../../context/TodoProvider";
 import Toggle from "../base/Toggle";
 
 interface ITodoProps {
   id: string;
   todo: string;
   isCompleted: boolean;
-  onTodoUpdate: (value: todoData) => void;
-  onTodoRemove: (id: string) => void;
 }
 
-const Todo = ({
-  id,
-  todo,
-  isCompleted,
-  onTodoUpdate,
-  onTodoRemove,
-  ...props
-}: ITodoProps) => {
+const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
   const [updatedContent, setUpdatedContent] = useState("");
+  const { onTodoUpdate, onTodoRemove } = useTodoDispatchContext();
+
   const ref = useRef<HTMLInputElement>(null);
   const isUpdate = updatedContent !== "";
 

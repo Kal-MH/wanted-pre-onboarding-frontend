@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
 import { ChangeEvent, FormEvent, useState } from "react";
 
+import { useTodoDispatchContext } from "../../context/TodoProvider";
 import { Button, Input } from "../base";
 
-interface INewTodoFormProps {
-  onTodoCreate: (inputValue: string) => void;
-}
-
-const NewTodoForm = ({ onTodoCreate }: INewTodoFormProps) => {
+const NewTodoForm = () => {
   const [inputValue, setInputValue] = useState("");
+  const { onTodoCreate } = useTodoDispatchContext();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

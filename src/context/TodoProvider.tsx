@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 import { todoData } from "../interfaces/todo";
 import todoReducer from "../utils/todoReducer";
@@ -25,6 +25,9 @@ const TodoContext = createContext<ITodoContext>({} as ITodoContext);
 const TodoDispatchContext = createContext<ITodoDispatchContext>(
   {} as ITodoDispatchContext
 );
+
+export const useTodoContext = () => useContext(TodoContext);
+export const useTodoDispatchContext = () => useContext(TodoDispatchContext);
 
 const TodoProvider = ({
   children,
