@@ -1,84 +1,86 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useReducer } from "react";
 
-import useLocalStorage from "../hooks/useLocalStorage";
 import { todoData } from "../interfaces/todo";
-import { STORAGE_KEYS } from "../utils/constants";
+import todoReducer from "../utils/todoReducer";
 
 interface ITodoProviderProps {
   children: React.ReactNode;
-  handleGetTodo: Function;
+  initialData: todoData[];
   handleCreateTodo: Function;
   handleDeleteTodo: Function;
   handleUpdateTodo: Function;
 }
 
+interface ITodoDispatchContext {
+  onTodoCreate: (content: string) => void;
+  onTodoUpdate: (todo: todoData) => void;
+  onTodoRemove: (id: string) => void;
+}
+
 interface ITodoContext {
   todos: todoData[];
-  addTodo: (content: string) => void;
-  updateTodo: (todo: todoData) => void;
-  removeTodo: (id: string) => void;
 }
 
 const TodoContext = createContext<ITodoContext>({} as ITodoContext);
-
-export const useTodos = () => useContext(TodoContext);
+const TodoDispatchContext = createContext<ITodoDispatchContext>(
+  {} as ITodoDispatchContext
+);
 
 const TodoProvider = ({
   children,
-  handleGetTodo,
+  initialData,
   handleCreateTodo,
   handleDeleteTodo,
   handleUpdateTodo,
 }: ITodoProviderProps) => {
-  const [todos, setTodos] = useLocalStorage<todoData[]>(STORAGE_KEYS.TODOS, []);
+  const [todos, dispatch] = useReducer(todoReducer, initialData);
 
-  useEffect(() => {
-    const initTodos = async () => {
-      const data = await handleGetTodo();
+  const onTodoCreate = async (inputValue: string) => {
+    try {
+      const data = await handleCreateTodo(inputValue);
 
-      setTodos(data);
-    };
+      dispatch({
+        type: "Create",
+        ...data,
+      });
+    } catch (e) {
+      alert(e);
+    }
+  };
 
-    initTodos();
-  }, []);
+  const onTodoUpdate = async (value: todoData) => {
+    try {
+      await handleUpdateTodo(value);
 
-  const addTodo = async (content: string) => {
-    const { id, isCompleted, todo } = await handleCreateTodo(content);
+      dispatch({
+        type: "Update",
+        id: value.id,
+        todo: value.todo,
+        isCompleted: value.isCompleted,
+      });
+    } catch (e) {
+      alert(e);
+    }
+  };
 
-    setTodos([
-      ...todos,
-      {
+  const onTodoRemove = async (id: string) => {
+    try {
+      await handleDeleteTodo(id);
+
+      dispatch({
+        type: "Remove",
         id,
-        todo,
-        isCompleted,
-      },
-    ]);
-  };
-
-  const updateTodo = async ({ id, todo = "", isCompleted }: todoData) => {
-    const filteredItem = todos.filter((item: todoData) => item.id === id)[0];
-    const config = {
-      id,
-      todo: todo ? todo : filteredItem.todo,
-      isCompleted:
-        isCompleted === undefined ? filteredItem.isCompleted : isCompleted,
-    };
-
-    await handleUpdateTodo({ ...config });
-    setTodos(
-      todos.map((item: todoData) => (item.id === id ? { ...config } : item))
-    );
-  };
-
-  const removeTodo = async (id: string) => {
-    await handleDeleteTodo(id);
-    setTodos(todos.filter((item: todoData) => item.id !== id));
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
   return (
-    <TodoContext.Provider value={{ todos, addTodo, updateTodo, removeTodo }}>
-      {children}
-    </TodoContext.Provider>
+    <TodoDispatchContext.Provider
+      value={{ onTodoCreate, onTodoUpdate, onTodoRemove }}>
+      <TodoContext.Provider value={{ todos }}>{children}</TodoContext.Provider>
+    </TodoDispatchContext.Provider>
   );
 };
 

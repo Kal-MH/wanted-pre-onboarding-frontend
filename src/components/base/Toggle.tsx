@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import { ChangeEvent } from "react";
 
-import useToggle from "../../hooks/useToggle";
-
 interface IToggleProps {
   on?: boolean;
   onChange?(e: ChangeEvent<HTMLInputElement>): void;
