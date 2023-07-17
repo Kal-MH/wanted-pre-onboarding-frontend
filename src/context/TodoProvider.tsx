@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 import { todoData } from "../interfaces/todo";
 import todoReducer from "../utils/todoReducer";
@@ -29,6 +29,8 @@ const TodoDispatchContext = createContext<ITodoDispatchContext>(
 export const useTodoContext = () => useContext(TodoContext);
 export const useTodoDispatchContext = () => useContext(TodoDispatchContext);
 
+const DEFAULT_VALUE: todoData[] = [];
+
 const TodoProvider = ({
   children,
   initialData,
@@ -36,7 +38,14 @@ const TodoProvider = ({
   handleDeleteTodo,
   handleUpdateTodo,
 }: ITodoProviderProps) => {
-  const [todos, dispatch] = useReducer(todoReducer, initialData);
+  const [todos, dispatch] = useReducer(todoReducer, DEFAULT_VALUE);
+
+  useEffect(() => {
+    dispatch({
+      type: "Init",
+      initialData,
+    });
+  }, [initialData]);
 
   const onTodoCreate = async (inputValue: string) => {
     try {
