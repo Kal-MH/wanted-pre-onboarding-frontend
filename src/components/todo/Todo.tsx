@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux/es/exports";
 
-import { useTodoDispatchContext } from "../../context/TodoProvider";
+import { removeTodo, updateTodo } from "../../redux/todos";
 import Toggle from "../base/Toggle";
 
 interface ITodoProps {
@@ -12,13 +13,13 @@ interface ITodoProps {
 
 const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
   const [updatedContent, setUpdatedContent] = useState("");
-  const { onTodoUpdate, onTodoRemove } = useTodoDispatchContext();
+  const dispatch = useDispatch();
 
   const ref = useRef<HTMLInputElement>(null);
   const isUpdate = updatedContent !== "";
 
   const handleToggleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onTodoUpdate({ id, todo, isCompleted: e.target.checked });
+    dispatch(updateTodo({ id, todo, isCompleted: e.target.checked }));
   };
 
   const handleUpdateClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,7 +29,7 @@ const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
 
   const handleUpdateSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onTodoUpdate({ id, todo: updatedContent, isCompleted });
+    dispatch(updateTodo({ id, todo: updatedContent, isCompleted }));
     setUpdatedContent("");
   };
 
@@ -39,7 +40,7 @@ const Todo = ({ id, todo, isCompleted, ...props }: ITodoProps) => {
 
   const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onTodoRemove(id);
+    dispatch(removeTodo(id));
   };
 
   useEffect(() => {

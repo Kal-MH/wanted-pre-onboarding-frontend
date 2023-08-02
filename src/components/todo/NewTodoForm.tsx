@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useDispatch } from "react-redux/es/exports";
 
-import { useTodoDispatchContext } from "../../context/TodoProvider";
+import { addTodo } from "../../redux/todos";
 import { Button, Input } from "../base";
 
 const NewTodoForm = () => {
   const [inputValue, setInputValue] = useState("");
-  const { onTodoCreate } = useTodoDispatchContext();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -14,7 +15,7 @@ const NewTodoForm = () => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onTodoCreate(inputValue);
+    dispatch(addTodo(inputValue));
     setInputValue("");
   };
 

@@ -1,7 +1,7 @@
 import { todoData } from "../../interfaces/todo";
 import { Action } from "./types";
 
-export const todoReducer = (state: todoData[], action: Action) => {
+export const todoReducer = (state: todoData[] = [], action: Action) => {
   switch (action.type) {
     case "ADD_TODO": {
       const newTodo = action.payload;

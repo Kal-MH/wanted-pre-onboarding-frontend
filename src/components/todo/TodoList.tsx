@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
-import { useTodoContext } from "../../context/TodoProvider";
+import { RootType, store } from "../../redux";
 import Todo from "./Todo";
 
 const TodoList = () => {
-  const { todos } = useTodoContext();
+  const todos = useSelector((store: RootType) => store.todoReducer);
 
   return (
     <S.UnorderedList>
